@@ -27,6 +27,8 @@ app.use((err, req, res, next) => {
   res.status(400).json({
     massage: "frist you go have to clean your mouth and come back",
   });
+
+erroeCount=errorCount+1;
 });
 
 module.exports = app;
