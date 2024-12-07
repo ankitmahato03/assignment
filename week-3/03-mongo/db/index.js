@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 // Connect to MongoDB
 mongoose.connect(
-  "mongodb+srv://ankitmahato768:Ankit%408016@cluster0.3komawu.mongodb.net/Course_Selling_App"
+  "mongodb+srv://ankitmahato768:Ankit%408016@cluster0.3komawu.mongodb.net/Course_SellingWEB"
 );
 
 // Define schemas

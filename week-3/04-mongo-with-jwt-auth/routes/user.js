@@ -1,26 +1,64 @@
 const { Router } = require("express");
 const router = Router();
 const userMiddleware = require("../middleware/user");
+const { User, Course } = require("../db");
+const {JWT_SECRET}  = require("../config");
+
 
 // User Routes
-router.post('/signup', (req, res) => {
-    // Implement user signup logic
+router.post("/signup", async (req, res) => {
+  // Implement user signup logic
+  const username = req.body.username;
+  const password = req.body.password;
+  await User.create({
+    username: username,
+    password: password,
+  });
+  res.json({
+    massage: "User Created Successfully",
+  });
 });
 
-router.post('/signin', (req, res) => {
-    // Implement admin signup logic
+router.get("/courses", async (req, res) => {
+  // Implement listing all courses logic
+  const response = await Course.find({});
+  res.json({
+    Courses: response,
+  });
 });
 
-router.get('/courses', (req, res) => {
-    // Implement listing all courses logic
+router.post("/courses/:courseId", userMiddleware, async (req, res) => {
+  // Implement course purchase logic
+  const courseId = req.params.courseId;
+  const username = req.headers.username;
+
+  await User.updateOne(
+    {
+      username: username,
+    },
+    {
+      $push: {
+        purchesdCources: courseId,
+      },
+    }
+  );
+  res.json({
+    massage: "Purchsed Successfully",
+  });
 });
 
-router.post('/courses/:courseId', userMiddleware, (req, res) => {
-    // Implement course purchase logic
+router.get("/purchasedCourses", userMiddleware, async (req, res) => {
+  // Implement fetching purchased courses logic
+  const user = await User.findOne({
+    username: req.headers.username,
+  });
+  const Courses = await Course.find({
+    _id: { $in: user.purchesdCources },
+  });
+
+  res.json({
+    Courses: Courses,
+  });
 });
 
-router.get('/purchasedCourses', userMiddleware, (req, res) => {
-    // Implement fetching purchased courses logic
-});
-
-module.exports = router
+module.exports = router;
