@@ -9,4 +9,7 @@ user.set("rs502", { name: "Ankita", age: 24, email: "email3@gmail.com", pass: "p
 user.set("rs503", { name: "rokcy", age: 24, email: "email2@gmail.com", pass: "pass" });
 user.set("rs504", { name: "tufan", age: 24, email: "email4@gmail.com", pass: "pass" });
 const users = user.get("rs504");
-console.log(users);
+const handleEvent = (event) => {
+    console.log(`Handling Event:${event}`);
+};
+handleEvent('Click');

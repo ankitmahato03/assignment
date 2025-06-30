@@ -1,25 +1,32 @@
+import { z } from 'zod';
+import express from "express";
 
-interface User{
-    name: string;
-    age: number;
-    email:string;
-    pass:string;
-}
+const app = express();
 
-type upDateuser=Pick<User,'name'|'email'|'pass'>;
-type updateuserOptional=Partial<upDateuser>;
-
-//readonly
-//records
-//map
+// Define the schema for profile update
+const userProfileSchema = z.object({
+  name: z.string().min(1, { message: "Name cannot be empty" }),
+  email: z.string().email({ message: "Invalid email format" }),
+  age: z.number().min(18, { message: "You must be at least 18 years old" }).optional(),
+});
 
 
-const user=new Map<string,User>()
-    user.set("rs500",{name : "Ankit",age:24,email:"email@gmail.com",pass:"pass"})
-    user.set("rs501",{name : "ram",age:24,email:"email1@gmail.com",pass:"pass"})
-    user.set("rs502",{name : "Ankita",age:24,email:"email3@gmail.com",pass:"pass"})
-    user.set("rs503",{name : "rokcy",age:24,email:"email2@gmail.com",pass:"pass"})
-    user.set("rs504",{name : "tufan",age:24,email:"email4@gmail.com",pass:"pass"})
+//Adding Compile time validation 
+type FinaluserSchema = z.infer<typeof userProfileSchema>;
 
-const users=user.get("rs504");
-console.log(users);
+
+app.put("/user", (req, res) => {
+  const { success } = userProfileSchema.safeParse(req.body);
+  const updateBody:FinaluserSchema = req.body; // how to assign a type to updateBody?
+
+  if (!success) {
+    res.status(411).json({});
+    return
+  }
+  // update database here
+  res.json({
+    message: "User updated"
+  })
+});
+
+app.listen(3000);
