@@ -1,0 +1,7 @@
+## DevOpsify a complete Project ##
+
+
+1. Before Devopsify a peoject you have to understand the project youself and create a build command .
+2. Then Create a multi stage Docker File .
+	the advantges of multistages docerfile is  
+

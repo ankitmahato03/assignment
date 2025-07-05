@@ -1,0 +1,13 @@
+## SQL Relationships ##
+
+## For useing the container bash 
+$docker exec -it container_id /bin/bash
+
+## After ssh into container run 
+$ psql -h hostname -d database_name -U user_name 
+
+After running all commands you can intract with your database 
+
+
+
+
