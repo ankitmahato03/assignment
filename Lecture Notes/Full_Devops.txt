@@ -3,5 +3,9 @@
 
 1. Before Devopsify a peoject you have to understand the project youself and create a build command .
 2. Then Create a multi stage Docker File .
-	the advantges of multistages docerfile is You 
+	the advantges of multistages docerfile is You
+
+3 A Dockerfile is a text-based document that's used to create a container image. It provides instructions to the image builder on the commands to run, files to copy, startup command, and more.
+
+ 
 
